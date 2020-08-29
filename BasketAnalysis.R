@@ -51,6 +51,8 @@ inspect(head(metal.association.rules))
 
 subRules<-association.rules[quality(association.rules)$confidence>0.4]
 #Plot SubRules
+mfrow(c=(1,2))
+windows()
 plot(subRules, jitter=0)
 plot(subRules,method="two-key plot", jitter=0)
 
