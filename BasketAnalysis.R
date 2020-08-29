@@ -60,4 +60,6 @@ plot(top10subRules, method = "graph",  engine = "htmlwidget")
 
 saveAsGraph(head(subRules, n = 1000, by = "lift"), file = "rules.graphml")
 subRules2<-head(subRules, n=20, by="lift")
+windows()
 plot(subRules2, method="paracoord")
+                         
