@@ -17,15 +17,13 @@ transactionData <- ddply(retail,c("InvoiceNo","Date"),
                                             collapse = ","))
 transactionData$InvoiceNo <- NULL
 transactionData$Date <- NULL
-write.csv(transactionData,"C:/Users/rasmu/OneDrive/Skrivebord/Github/Data/OnlineRetail.csv", 
+write.csv(transactionData,"C:/Users/rasmu/OneDrive/Skrivebord/Github/Data/OnlineRetailtr.csv", 
           quote = FALSE, row.names = FALSE)
 
-tr <- read.transactions('C:/Users/rasmu/OneDrive/Skrivebord/Github/Data/OnlineRetail.csv', 
+tr <- read.transactions('C:/Users/rasmu/OneDrive/Skrivebord/Github/Data/OnlineRetailtr.csv', 
                         format = 'basket', sep=',')
 
 summary(tr)
-
-
 
 # Create an item frequency plot for the top 20 items
 if (!require("RColorBrewer")) {
@@ -34,6 +32,9 @@ if (!require("RColorBrewer")) {
   #include library RColorBrewer
   library(RColorBrewer)
 }
+                         
+windows()
+par(mfrow=c(2, 1))                 
 itemFrequencyPlot(tr,topN=20,type="absolute",col=brewer.pal(8,'Pastel2'), main="Absolute Item Frequency Plot")
 itemFrequencyPlot(tr,topN=20,type="relative",col=brewer.pal(8,'Pastel2'),main="Relative Item Frequency Plot")
 
@@ -51,12 +52,13 @@ inspect(head(metal.association.rules))
 
 subRules<-association.rules[quality(association.rules)$confidence>0.4]
 #Plot SubRules
-mfrow(c=(1,2))
 windows()
+par(mfrow=c(2, 1))  
 plot(subRules, jitter=0)
 plot(subRules,method="two-key plot", jitter=0)
 
-
+windows()
+par(mfrow=c(2, 1))  
 top10subRules <- head(subRules, n = 10, by = "confidence")
 plot(top10subRules, method = "graph",  engine = "htmlwidget")
 
