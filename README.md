@@ -1,5 +1,6 @@
 # Basket Analysis in Ecommerce
 This repository contains my code for a basket analysis study.
+
 Inspired by: https://www.datacamp.com/community/tutorials/market-basket-analysis-r
 
 First, we need to load the packages we need for the analysis:
@@ -59,27 +60,44 @@ itemFrequencyPlot(tr,topN=20,type="relative",col=brewer.pal(8,'Pastel2'),main="R
 This is where it gets interesting.
 We want to use the "apriori" function to list the products associated in the data. 
 This is done by frequency of observation count, and is therefore both transparent in calculation and easy to implement.
-``
+```
 association.rules <- apriori(tr, parameter = list(supp=0.001, conf=0.8,maxlen=10))
 inspect(association.rules[1:10])
 ```
-
+Quote from the Link:
+**"How can you limit the size and number of rules generated? You can do this by setting parameters in apriori. You set these parameters to adjust the number of rules you will get. If you want stronger rules, you can increase the value of conf and for more extended rules give higher value to maxlen."**
+```
 shorter.association.rules <- apriori(tr, parameter = list(supp=0.001, conf=0.8,maxlen=3))
+```
+For rules that are double sided (A=B and B=A), and rules that are otherwise redundant, we can eliminate them with the following subset.
+```
 subset.rules <- which(colSums(is.subset(association.rules, association.rules)) > 1) # get subset rules in vector
 length(subset.rules)
 subset.association.rules. <- association.rules[-subset.rules]
+```
+The following code is only useable in its crude form, if you're using the same dataset.
+The "METAL" parameter specification is simply a way to figure what rules are nested to "METAL", but it could be whatever
+item you have in your basket.
+```
 metal.association.rules <- apriori(tr, parameter = list(supp=0.001, conf=0.8),appearance = list(default="lhs",rhs="METAL"))
 inspect(head(metal.association.rules))
 metal.association.rules <- apriori(tr, parameter = list(supp=0.001, conf=0.8),appearance = list(lhs="METAL",default="rhs"))
 inspect(head(metal.association.rules))
-
+```
+## Visualizing
+Now we want to visually confirm the rules appointed in the estimations above.
+To do this, I prefer to plot multiple plots of same characteristics in the same window.
+Therefore, I use the function 'windows()' and 'par(mfrow=c(2,1))'.
+### plot 1
+```
 subRules<-association.rules[quality(association.rules)$confidence>0.4]
-#Plot SubRules
 windows()
 par(mfrow=c(2, 1))  
 plot(subRules, jitter=0)
 plot(subRules,method="two-key plot", jitter=0)
-
+```
+### plot 2
+```
 windows()
 par(mfrow=c(2, 1))  
 top10subRules <- head(subRules, n = 10, by = "confidence")
@@ -87,6 +105,5 @@ plot(top10subRules, method = "graph",  engine = "htmlwidget")
 
 saveAsGraph(head(subRules, n = 1000, by = "lift"), file = "rules.graphml")
 subRules2<-head(subRules, n=20, by="lift")
-windows()
 plot(subRules2, method="paracoord")
 ```
