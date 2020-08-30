@@ -10,7 +10,7 @@ Packages <- c("arules", "arulesViz", "tidyverse", "readr", "knitr",
 #install.packages(Packages)
 lapply(Packages, library, character.only=TRUE)
 ```
-##Formatting
+## Formatting
 We then need to load the data. This should consist of the following columns;
 InvoiceNo, StockCode, Description, Quantity, InvoiceDate, UnitPrice, CustomerID, Country.
 There are many retail datasets available online. Most of these will include the columns needed.
@@ -55,7 +55,7 @@ par(mfrow=c(2, 1))
 itemFrequencyPlot(tr,topN=20,type="absolute",col=brewer.pal(8,'Pastel2'), main="Absolute Item Frequency Plot")
 itemFrequencyPlot(tr,topN=20,type="relative",col=brewer.pal(8,'Pastel2'),main="Relative Item Frequency Plot")
 ```
-##Estimation
+## Estimation
 This is where it gets interesting.
 We want to use the "apriori" function to list the products associated in the data. 
 This is done by frequency of observation count, and is therefore both transparent in calculation and easy to implement.
