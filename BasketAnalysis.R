@@ -1,5 +1,5 @@
 #Basket Analysis
-#Currently just at copy of: https://www.datacamp.com/community/tutorials/market-basket-analysis-r
+#Inspired by: https://www.datacamp.com/community/tutorials/market-basket-analysis-r
 Packages <- c("arules", "arulesViz", "tidyverse", "readr", "knitr", 
               "ggplot2", "lubridate", "plyr", "dplyr")
 #install.packages(Packages)
