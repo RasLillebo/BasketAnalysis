@@ -96,6 +96,7 @@ par(mfrow=c(2, 1))
 plot(subRules, jitter=0)
 plot(subRules,method="two-key plot", jitter=0)
 ```
+![Pic1](https://user-images.githubusercontent.com/69420936/91757138-28e35980-ebce-11ea-9ec5-a0edd152270e.png)
 ### plot 2
 ```
 windows()
@@ -107,3 +108,4 @@ saveAsGraph(head(subRules, n = 1000, by = "lift"), file = "rules.graphml")
 subRules2<-head(subRules, n=20, by="lift")
 plot(subRules2, method="paracoord")
 ```
+![BA_Pic2](https://user-images.githubusercontent.com/69420936/91757259-4e706300-ebce-11ea-954e-0815aefdd153.png)
